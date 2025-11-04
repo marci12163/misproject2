@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Emily's Homepage!</title>
+    <style>
+        :root {
+            --deep-green: #004d37;
+            --teal: #008069;
+            --mauve: #B2456E;
+            --pink: #F8B6AE;
+            --light-pink: #FBEAE7;
+            --brown: #3a2117;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, var(--light-pink) 0%, var(--pink) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            background-color: var(--deep-green);
+            padding: 1rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .nav-list li a {
+            color: var(--light-pink);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .nav-list li a:hover {
+            background-color: var(--teal);
+            transform: translateY(-2px);
+        }
+
+        .nav-list li a.active {
+            background-color: var(--mauve);
+            box-shadow: 0 4px 15px rgba(178, 69, 110, 0.3);
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-container {
+            text-align: center;
+            padding: 3rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.5);
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-picture {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--mauve);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .introduction {
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+        }
+
+        .hobbies-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .hobby-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .hobby-card h2 {
+            color: var(--mauve);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .hobby-card p {
+            color: var(--brown);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .video-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+            text-align: center;
+        }
+
+        .video-section h2 {
+            color: var(--mauve);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder {
+            color: var(--deep-green);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .hobby-image {
+            margin: 1rem 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-image:hover {
+            transform: scale(1.02);
+        }
+
+        .hobby-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .welcome-container h1 {
+            color: var(--mauve);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .welcome-container p {
+            color: var(--brown);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        /* Grass and Flowers Section */
+        .nature-elements {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, var(--deep-green), var(--teal));
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .grass {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: 
+                linear-gradient(45deg, transparent 25%, var(--deep-green) 25%) 0 50px,
+                linear-gradient(-45deg, transparent 25%, var(--deep-green) 25%) 0 50px;
+            background-size: 30px 30px;
+            animation: grassWave 3s ease-in-out infinite alternate;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 50px;
+            width: 20px;
+            height: 20px;
+            animation: flowerSway 3s ease-in-out infinite alternate;
+        }
+
+        .flower::before {
+            content: '🌷';
+            font-size: 24px;
+        }
+
+        /* Generate multiple flowers */
+        .flower:nth-child(2) { left: 15%; animation-delay: 0.5s; }
+        .flower:nth-child(3) { left: 25%; animation-delay: 0.8s; }
+        .flower:nth-child(4) { left: 40%; animation-delay: 1.2s; }
+        .flower:nth-child(5) { left: 55%; animation-delay: 0.3s; }
+        .flower:nth-child(6) { left: 70%; animation-delay: 0.9s; }
+        .flower:nth-child(7) { left: 85%; animation-delay: 0.6s; }
+
+        @keyframes grassWave {
+            0% { transform: skewX(-2deg); }
+            100% { transform: skewX(2deg); }
+        }
+
+        @keyframes flowerSway {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .nav-bar {
+                padding: 1rem 0;
+            }
+
+            .welcome-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .welcome-container h1 {
+                font-size: 2rem;
+            }
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #7f8c8d;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="hobbies.html">Hobbies</a></li>
+            <li><a href="resume.html">Resume</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <div class="welcome-container">
+            <div class="profile-picture">
+                <img src="profilepic.JPG" alt="Emily Marciniak">
+            </div>
+            <h1>Hello, Welcome to Emily's Webpage!🌷</h1>
+            <div class="introduction">
+                <p>Hello and welcome to my webpage! My name is Emily Marciniak and I am pursuing a degree in Marketing and Graphic Design. Here you will find what you need to know about myself, my profession, my hobbies and much more! Thank you for visiting my page!</p>
+            </div>
+            
+            <div class="hobbies-section">
+                <div class="hobby-card">
+                    <h2>Photography</h2>
+                    <div class="hobby-image">
+                        <img src="photography.JPG" alt="Photography">
+                    </div>
+                    <p>One of my favorite activities outside of school and work is photography. I got my first camera at the young age of nine and I have fell in love with the hobby since. Something I am very proud of is how I submitted my photos at age ten to a newspaper contest and all three photos made it in the local newspaper! I also took my brother's graduation photos as well as one of my friends. One thing about me is whenever I have a chance, I love to be outside taking pictures!</p>
+                </div>
+                
+                <div class="hobby-card">
+                    <h2>Listening to Music</h2>
+                    <div class="hobby-image">
+                        <img src="musicartist.JPG" alt="Music Artist">
+                    </div>
+                    <p>Another hobby I enjoy doing is listening to music on a daily basis. As someone who makes art myself, I can't help but enjoy the art created by others. There are so many talented music artist out there and I am constantly finding new people to listen too. Something about playing music, especially with others, is something I really love.</p>
+                </div>
+            </div>
+
+            <div class="video-section">
+                <h2>Welcome Video</h2>
+                <div class="video-container">
+                    <p class="video-placeholder">Video coming soon! 🎥</p>
+                    <!-- Add your video embed code here when ready -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nature-elements">
+        <div class="grass"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+    </div>
+</body>
+</html>
