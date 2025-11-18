@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emily Marciniak - Hobbies and Interests">
+    <title>Hobbies | Emily Marciniak</title>
+    <style>
+        :root {
+            --deep-green: #004d37;
+            --teal: #008069;
+            --mauve: #B2456E;
+            --pink: #F8B6AE;
+            --light-pink: #FBEAE7;
+            --brown: #3a2117;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(180deg, var(--light-pink) 0%, var(--pink) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            background-color: var(--deep-green);
+            padding: 1rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .nav-list li a {
+            color: var(--light-pink);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: block;
+        }
+
+        .nav-list li a:hover {
+            background-color: var(--teal);
+            transform: translateY(-2px);
+        }
+
+        .nav-list li a.active {
+            background-color: var(--mauve);
+            box-shadow: 0 4px 15px rgba(178, 69, 110, 0.3);
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-container {
+            text-align: center;
+            padding: 3rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.5);
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-container h1 {
+            color: var(--mauve);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .welcome-container h2 {
+            color: var(--mauve);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .welcome-container p {
+            color: var(--brown);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(178, 69, 110, 0.3);
+        }
+
+        .hobby-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(178, 69, 110, 0.2);
+        }
+
+        .hobby-card h3 {
+            color: var(--mauve);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hobby-card p {
+            color: var(--brown);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: left;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .content-section li {
+            color: var(--brown);
+            padding: 0.75rem 0;
+            font-size: 1.05rem;
+        }
+
+        .content-section li:before {
+            content: "✨ ";
+            margin-right: 0.75rem;
+        }
+
+        .nature-elements {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, var(--deep-green), var(--teal));
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .grass {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: 
+                linear-gradient(45deg, transparent 25%, var(--deep-green) 25%) 0 50px,
+                linear-gradient(-45deg, transparent 25%, var(--deep-green) 25%) 0 50px;
+            background-size: 30px 30px;
+            animation: grassWave 3s ease-in-out infinite alternate;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 50px;
+            width: 20px;
+            height: 20px;
+            animation: flowerSway 3s ease-in-out infinite alternate;
+        }
+
+        .flower::before {
+            content: '🌷';
+            font-size: 24px;
+        }
+
+        .flower:nth-child(2) { left: 15%; animation-delay: 0.5s; }
+        .flower:nth-child(3) { left: 25%; animation-delay: 0.8s; }
+        .flower:nth-child(4) { left: 40%; animation-delay: 1.2s; }
+        .flower:nth-child(5) { left: 55%; animation-delay: 0.3s; }
+        .flower:nth-child(6) { left: 70%; animation-delay: 0.9s; }
+        .flower:nth-child(7) { left: 85%; animation-delay: 0.6s; }
+
+        @keyframes grassWave {
+            0% { transform: skewX(-2deg); }
+            100% { transform: skewX(2deg); }
+        }
+
+        @keyframes flowerSway {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .nav-bar {
+                padding: 1rem 0;
+            }
+
+            .welcome-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .welcome-container h1 {
+                font-size: 2rem;
+            }
+
+            .hobbies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="hobbies.html" class="active">Hobbies</a></li>
+            <li><a href="resume.html">Resume</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <div class="welcome-container">
+            <h1>My Hobbies & Passions</h1>
+            <p style="font-size: 1.2rem; color: var(--teal); font-weight: 500;">Photography, Music & Creative Expression</p>
+
+            <section class="content-section">
+                <h2>About My Passions</h2>
+                <p>My hobbies reflect my love for creative expression and visual storytelling. From capturing special moments through my camera lens to finding inspiration in music and art, these passions directly influence my approach to design and communication. They represent the core of who I am and shape the work I create.</p>
+            </section>
+
+            <div class="hobbies-grid">
+                <article class="hobby-card">
+                    <div class="hobby-icon">📷</div>
+                    <h3>Photography</h3>
+                    <img src="photography.jpg" alt="Camera on tripod in a field at sunset" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin: 1rem 0;">
+                    <p>My journey in photography began at age nine when I received my first camera. This passion has led me to capture special moments for family and friends, including graduation photos. I love exploring nature through my lens and sharing beautiful moments with others through visual storytelling.</p>
+                </article>
+
+                <article class="hobby-card">
+                    <div class="hobby-icon">🎨</div>
+                    <h3>Art</h3>
+                    <img src="2025-10-06 Emily Painting.jpg" alt="Landscape painting with trees and lake" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin: 1rem 0;">
+                    <p>Creating art allows me to express myself and explore visual storytelling in new ways. I find inspiration in nature, landscapes, and the play of light and color. Each piece reflects my passion for capturing beauty and translating emotions into visual form.</p>
+                </article>
+
+                <article class="hobby-card">
+                    <div class="hobby-icon">🎵</div>
+                    <h3>Music</h3>
+                    <img src="sc-concert.jpg" alt="Concert crowd with hands in the air" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin: 1rem 0;">
+                    <p>Music is a vital part of my creative process. I enjoy exploring various music genres and appreciating the talents of diverse artists. From discovering new sounds to listening to the classics, music continually inspires my creative work and enriches both my personal life and professional endeavors.</p>
+                </article>
+            </div>
+
+            <section class="content-section">
+                <h2>How These Interests Connect</h2>
+                <p>Photography sharpens my visual design skills, helping me compose compelling images and layouts. Music and arts expand my creative thinking and cultural awareness, which enhances my ability to create meaningful designs that resonate with people. These hobbies are not just personal interests—they're essential to my growth as a creative professional.</p>
+            </section>
+
+        </div>
+    </div>
+
+    <div class="nature-elements">
+        <div class="grass"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+        <div class="flower"></div>
+    </div>
+</body>
+</html>

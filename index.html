@@ -50,9 +50,7 @@
             border-radius: 25px;
             transition: all 0.3s ease;
             font-weight: 500;
-            display: inline-block;
-            width: 100%;
-            text-align: center;
+            display: block;
         }
 
         .nav-list li a:hover {
@@ -290,17 +288,6 @@
                 font-size: 2rem;
             }
         }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #7f8c8d;
-            font-size: 18px;
-            line-height: 1.6;
-        }
     </style>
 </head>
 <body>
@@ -342,13 +329,15 @@
                 </div>
             </div>
 
-            <div class="video-section">
-                <h2>Welcome Video</h2>
-                <div class="video-container">
-                    <p class="video-placeholder">Video coming soon! 🎥</p>
-                    <!-- Add your video embed code here when ready -->
-                </div>
-            </div>
+<div class="video-section">
+    <h2>Welcome Video</h2>
+    <div class="video-container">
+        <video width="100%" controls>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        </div>
+</div>
         </div>
     </div>
     <div class="nature-elements">

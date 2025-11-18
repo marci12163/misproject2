@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Shop Catch Game</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #8B4513, #D2691E, #CD853F);
+  overflow: hidden;
+  /* I removed 'cursor: none' temporarily so you can see your mouse if the game freezes */
+  cursor: default; 
+}
+
+/* NAV BAR */
+.nav-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(139, 69, 19, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px; z-index: 1000;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.nav-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+.nav-title { color: #FFF8DC; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+.nav-link {
+  background: #FFF8DC; color: #8B4513; padding: 10px 20px;
+  border-radius: 25px; text-decoration: none; font-weight: bold;
+  transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.nav-link:hover { background: #FFE4B5; transform: translateY(-2px); }
+
+/* GAME CONTAINER */
+.game-container {
+  position: relative; width: 100vw; height: 100vh;
+  background: linear-gradient(to bottom, #F5F5DC 0%, #FFF8DC 30%, #F0E68C 100%);
+  overflow: hidden; padding-top: 80px;
+  cursor: none; /* Hides cursor only inside the game area */
+}
+
+/* DECORATIONS */
+.coffee-shop-bg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 15% 15%, rgba(255, 248, 220, 0.4) 0%, transparent 40%),
+              radial-gradient(circle at 85% 85%, rgba(245, 222, 179, 0.4) 0%, transparent 40%),
+              linear-gradient(45deg, transparent 20%, rgba(255, 248, 220, 0.2) 50%, transparent 80%);
+  z-index: 1;
+}
+.coffee-bean {
+  position: absolute; width: 30px; height: 40px;
+  background-image: url('coffeebean.png'); background-size: contain;
+  background-repeat: no-repeat; background-position: center;
+  opacity: 0.2; animation: float 8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+.coffee-bean:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+.coffee-bean:nth-child(2) { top: 40%; right: 15%; animation-delay: 2s; }
+.coffee-bean:nth-child(3) { top: 60%; left: 20%; animation-delay: 4s; }
+.coffee-bean:nth-child(4) { top: 30%; right: 30%; animation-delay: 6s; }
+@keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
+
+/* UI ELEMENTS */
+.score {
+  position: absolute; top: 100px; right: 20px;
+  background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+  padding: 15px 25px; border-radius: 25px; font-size: 24px;
+  font-weight: bold; color: #8B4513; border: 3px solid #D2691E; z-index: 100;
+}
+.health-container {
+  position: absolute; top: 100px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+  padding: 12px 20px; border-radius: 20px; border: 3px solid #D2691E; z-index: 100; min-width: 200px;
+}
+.health-label { color: #8B4513; font-size: 16px; font-weight: bold; margin-bottom: 8px; text-align: center; }
+.health-bar { width: 100%; height: 20px; background-color: #ddd; border-radius: 10px; overflow: hidden; border: 2px solid #8B4513; position: relative; }
+.health-fill { height: 100%; background: linear-gradient(90deg, #ff4444 0%, #ffaa44 50%, #44ff44 100%); border-radius: 8px; transition: width 0.3s ease; }
+.health-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #8B4513; font-weight: bold; font-size: 12px; }
+.level-indicator {
+  position: absolute; top: 200px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+  padding: 10px 20px; border-radius: 20px; font-size: 18px; font-weight: bold; color: #8B4513;
+  z-index: 100; border: 3px solid #D2691E;
+}
+.instructions {
+  position: absolute; top: 200px; left: 20px;
+  background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+  padding: 20px; border-radius: 20px; font-size: 16px; color: #8B4513;
+  max-width: 320px; z-index: 100; border: 3px solid #D2691E; font-weight: 500;
+}
+
+/* MUSIC TOGGLE */
+.music-toggle {
+    position: fixed; bottom: 20px; right: 20px;
+    background: #8B4513; color: #FFF8DC; padding: 12px 20px;
+    border-radius: 30px; border: 2px solid #D2691E; cursor: pointer;
+    z-index: 2000; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.music-toggle:hover { transform: scale(1.05); background: #A0522D; }
+
+/* GAME OBJECTS */
+.mug {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  width: 100px; height: 80px;
+  background-image: url('pixelmug.png'); background-size: contain;
+  background-repeat: no-repeat; background-position: center;
+  z-index: 10;
+}
+.falling-item {
+  position: absolute; width: 45px; height: 45px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; z-index: 10; transition: transform 0.1s ease;
+}
+.good-item {
+  background: linear-gradient(135deg, #FFB6C1, #FFA0B4);
+  border: 2px solid #FF69B4; animation: gentleBounce 1.5s ease-in-out infinite;
+}
+.bad-item {
+  background: linear-gradient(135deg, #8B4513, #654321);
+  border: 2px solid #4A2C2A; animation: gentleWiggle 0.8s ease-in-out infinite;
+}
+@keyframes gentleBounce { 0%, 100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-3px) scale(1.02); } }
+@keyframes gentleWiggle { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(1deg) scale(1.01); } 75% { transform: rotate(-1deg) scale(1.01); } }
+
+.game-over {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 20px;
+  text-align: center; font-size: 24px; color: #8B4513; display: none; z-index: 200; cursor: default;
+}
+.restart-btn {
+  background: #8B4513; color: white; border: none; padding: 15px 30px;
+  border-radius: 25px; font-size: 18px; cursor: pointer; margin-top: 20px;
+}
+.particle { position: absolute; width: 6px; height: 6px; background: #FFD700; border-radius: 50%; animation: particle 0.6s ease-out forwards; }
+@keyframes particle { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0) translateY(-50px); } }
+</style>
+</head>
+<body>
+
+  <div class="nav-bar">
+    <div class="nav-content">
+      <div class="nav-title">☕ Coffee Shop Catch</div>
+      <a href="index.html" class="nav-link">🏠 Back to Home</a>
+    </div>
+  </div>
+
+  <div class="game-container">
+    <div class="coffee-shop-bg"></div>
+    <div class="instructions">
+      <strong>🍩 Catch the Donuts!</strong><br>
+      Move mouse to catch!<br>
+      Avoid flies 🪰 | Catch donuts 🍩
+    </div>
+
+    <div class="level-indicator" id="levelIndicator">Level 1</div>
+    <div class="score" id="score">Score: 0</div>
+
+    <div class="health-container">
+      <div class="health-label">❤️ Health</div>
+      <div class="health-bar">
+        <div class="health-fill" id="healthFill" style="width: 100%;"></div>
+        <div class="health-text" id="healthText">100/100</div>
+      </div>
+    </div>
+
+     <div class="mug" id="mug"></div>
+     
+     <div class="game-over" id="gameOver">
+       <h2>Game Over!</h2>
+       <p>Final Score: <span id="finalScore">0</span></p>
+       <button class="restart-btn" onclick="restartGame()">Play Again</button>
+     </div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <!-- Free royalty-free retro game music from freepd.com -->
+    <source src="https://www.freepd.com/music/Retro%20Synthwave.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="win-sound">
+    <!-- Free success sound from freesound.org (CC0) -->
+    <source src="https://freesound.org/static/sounds/573019/573019__myfreeloops__happy-chime-notification.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="lose-sound">
+    <!-- Free error sound -->
+    <source src="https://freesound.org/static/sounds/539131/539131__plasterbrain__error-sound.mp3" type="audio/mpeg">
+  </audio>
+  
+  <button class="music-toggle" onclick="toggleMusic()">🎵 Music On/Off</button>
+
+  <script>
+    // Safe Toggle Function
+    function toggleMusic() {
+        if (game && game.bgMusic) {
+            if (game.bgMusic.paused) {
+                game.bgMusic.play().catch(e => console.log("Audio error:", e));
+            } else {
+                game.bgMusic.pause();
+            }
+        }
+    }
+
+    class CoffeeShopGame {
+      constructor() {
+        // Grab Elements
+        this.canvas = document.querySelector('.game-container');
+        this.mug = document.getElementById('mug');
+        this.scoreElement = document.getElementById('score');
+        this.gameOverElement = document.getElementById('gameOver');
+        this.finalScoreElement = document.getElementById('finalScore');
+        this.levelIndicator = document.getElementById('levelIndicator');
+        this.healthFill = document.getElementById('healthFill');
+        this.healthText = document.getElementById('healthText');
+        
+        // --- SAFE AUDIO LOADING ---
+        // This prevents the "Blank Screen" if audio is missing
+        this.bgMusic = document.getElementById('bg-music');
+        this.winSound = document.getElementById('win-sound');
+        this.loseSound = document.getElementById('lose-sound');
+
+        // Only set volume if the elements actually exist
+        if(this.bgMusic) this.bgMusic.volume = 0.3;
+        if(this.winSound) this.winSound.volume = 0.6;
+        if(this.loseSound) this.loseSound.volume = 0.6;
+        // ---------------------------
+
+        this.score = 0;
+        this.level = 1;
+        this.health = 100;
+        this.maxHealth = 100;
+        this.gameRunning = false;
+        this.fallingItems = [];
+        this.spawnRate = 3000; 
+        this.fallSpeed = 1.5; 
+        this.badItemChance = 0.15; 
+        this.goodItems = ['🍩', '🍩', '🍩', '🍩', '🍩', '🍩', '🍩', '🍩']; 
+        this.badItems = ['🪰', '🪰', '🪰', '🪰', '🪰', '🪰', '🪰', '🪰']; 
+       
+        this.init();
+      }
+     
+      init() {
+        this.setupEventListeners();
+        this.startGame();
+      }
+     
+      setupEventListeners() {
+        document.addEventListener('mousemove', (e) => {
+          if (this.gameRunning) {
+            const containerRect = this.canvas.getBoundingClientRect();
+            const mouseX = e.clientX - containerRect.left;
+            const mugWidth = 100;
+            const maxX = containerRect.width - mugWidth;
+            let newX = Math.max(0, Math.min(mouseX - mugWidth/2, maxX));
+            if(this.mug) this.mug.style.left = newX + 'px';
+          }
+        });
+      }
+     
+      startGame() {
+        this.gameRunning = true;
+        this.score = 0;
+        this.level = 1;
+        this.health = this.maxHealth;
+        this.spawnRate = 3000;
+        this.fallSpeed = 1.5;
+        this.badItemChance = 0.15;
+        this.fallingItems = [];
+       
+        this.updateScore();
+        this.updateHealth();
+        if(this.gameOverElement) this.gameOverElement.style.display = 'none';
+        
+        // Try to play music safely
+        if(this.bgMusic) {
+            this.bgMusic.currentTime = 0;
+            this.bgMusic.play().catch(e => console.log("Click page to enable audio"));
+        }
+
+        this.spawnItems();
+        this.gameLoop();
+      }
+     
+      spawnItems() {
+        if (!this.gameRunning) return;
+        const isBad = Math.random() < this.badItemChance;
+        const items = isBad ? this.badItems : this.goodItems;
+        const item = items[Math.floor(Math.random() * items.length)];
+       
+        const fallingItem = document.createElement('div');
+        fallingItem.className = `falling-item ${isBad ? 'bad-item' : 'good-item'}`;
+        fallingItem.textContent = item;
+        fallingItem.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+        fallingItem.style.top = '-50px';
+       
+        this.canvas.appendChild(fallingItem);
+        this.fallingItems.push({
+          element: fallingItem, isBad: isBad,
+          x: parseInt(fallingItem.style.left), y: -50,
+          speed: this.fallSpeed + Math.random() * 1
+        });
+        setTimeout(() => this.spawnItems(), this.spawnRate);
+      }
+     
+      gameLoop() {
+        if (!this.gameRunning) return;
+        this.updateFallingItems();
+        this.checkCollisions();
+        requestAnimationFrame(() => this.gameLoop());
+      }
+     
+      updateFallingItems() {
+        this.fallingItems.forEach((item, index) => {
+          item.y += item.speed;
+          item.element.style.top = item.y + 'px';
+          if (item.y > window.innerHeight + 50) {
+            if (!item.isBad) this.decreaseHealth(15);
+            if (item.element.parentNode) item.element.parentNode.removeChild(item.element);
+            this.fallingItems.splice(index, 1);
+          }
+        });
+      }
+     
+      checkCollisions() {
+        if(!this.mug) return;
+        const mugRect = this.mug.getBoundingClientRect();
+        this.fallingItems.forEach((item, index) => {
+          const itemRect = item.element.getBoundingClientRect();
+          if (itemRect.bottom >= mugRect.top && itemRect.top <= mugRect.bottom &&
+              itemRect.left < mugRect.right && itemRect.right > mugRect.left) {
+            if (item.isBad) {
+              this.decreaseHealth(20);
+              this.createParticles(itemRect.left + 25, itemRect.top + 25, '#FF6B6B');
+            } else {
+              this.score += 10;
+              this.createParticles(itemRect.left + 25, itemRect.top + 25, '#FFB6C1');
+            }
+            if (item.element.parentNode) item.element.parentNode.removeChild(item.element);
+            this.fallingItems.splice(index, 1);
+            this.updateScore();
+            this.updateLevel();
+          }
+        });
+      }
+     
+      createParticles(x, y, color) {
+        for (let i = 0; i < 8; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = x + 'px'; particle.style.top = y + 'px';
+          particle.style.background = color;
+          this.canvas.appendChild(particle);
+          setTimeout(() => { if (particle.parentNode) particle.parentNode.removeChild(particle); }, 600);
+        }
+      }
+     
+      updateScore() { if(this.scoreElement) this.scoreElement.textContent = `Score: ${this.score}`; }
+     
+      updateHealth() {
+        if(!this.healthFill || !this.healthText) return;
+        const healthPercentage = (this.health / this.maxHealth) * 100;
+        this.healthFill.style.width = healthPercentage + '%';
+        this.healthText.textContent = `${this.health}/${this.maxHealth}`;
+        if (healthPercentage > 60) this.healthFill.style.background = 'linear-gradient(90deg, #44ff44 0%, #88ff88 100%)';
+        else if (healthPercentage > 30) this.healthFill.style.background = 'linear-gradient(90deg, #ffaa44 0%, #ffcc66 100%)';
+        else this.healthFill.style.background = 'linear-gradient(90deg, #ff4444 0%, #ff6666 100%)';
+      }
+     
+      decreaseHealth(amount) {
+        this.health = Math.max(0, this.health - amount);
+        this.updateHealth();
+        if (this.health <= 0) this.gameOver();
+      }
+     
+      updateLevel() {
+        const newLevel = Math.floor(this.score / 50) + 1;
+        if (newLevel > this.level) {
+          this.level = newLevel;
+          if(this.levelIndicator) this.levelIndicator.textContent = `Level ${this.level}`;
+          if(this.winSound) { this.winSound.currentTime = 0; this.winSound.play().catch(e=>{}); }
+          this.spawnRate = Math.max(1500, this.spawnRate - 150);
+          this.fallSpeed = Math.min(4, this.fallSpeed + 0.3);
+          this.badItemChance = Math.min(0.4, this.badItemChance + 0.03);
+        }
+      }
+     
+      gameOver() {
+        this.gameRunning = false;
+        if(this.finalScoreElement) this.finalScoreElement.textContent = this.score;
+        if(this.gameOverElement) this.gameOverElement.style.display = 'block';
+        
+        if(this.bgMusic) this.bgMusic.pause();
+        if(this.loseSound) { this.loseSound.currentTime = 0; this.loseSound.play().catch(e=>{}); }
+
+        this.fallingItems.forEach(item => {
+          if (item.element.parentNode) item.element.parentNode.removeChild(item.element);
+        });
+        this.fallingItems = [];
+      }
+    }
+   
+    let game = null;
+    
+    function restartGame() {
+      if (game) {
+        game.startGame();
+      } else {
+        game = new CoffeeShopGame();
+      }
+    }
+    
+    // Initialize game when DOM is ready (not waiting for all resources)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        game = new CoffeeShopGame();
+      });
+    } else {
+      // DOM is already loaded
+      game = new CoffeeShopGame();
+    }
+  </script>
+</body>
+</html>
