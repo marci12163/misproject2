@@ -11,7 +11,6 @@ body {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(135deg, #8B4513, #D2691E, #CD853F);
   overflow: hidden;
-  /* I removed 'cursor: none' temporarily so you can see your mouse if the game freezes */
   cursor: default; 
 }
 
@@ -144,7 +143,6 @@ body {
       <div class="nav-title">☕ Coffee Shop Catch</div>
       <a href="index.html" class="nav-link">🏠 Back to Home</a>
     </div>
-  </div>
 
   <div class="game-container">
     <div class="coffee-shop-bg"></div>
@@ -152,6 +150,7 @@ body {
       <strong>🍩 Catch the Donuts!</strong><br>
       Move mouse to catch!<br>
       Avoid flies 🪰 | Catch donuts 🍩
+        *Thank you to Kirsten and Harmony for helping make this game possible!*
     </div>
 
     <div class="level-indicator" id="levelIndicator">Level 1</div>
@@ -175,16 +174,7 @@ body {
   </div>
 
   <audio id="bg-music" loop>
-    <!-- Free royalty-free retro game music from freepd.com -->
-    <source src="https://www.freepd.com/music/Retro%20Synthwave.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="win-sound">
-    <!-- Free success sound from freesound.org (CC0) -->
-    <source src="https://freesound.org/static/sounds/573019/573019__myfreeloops__happy-chime-notification.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="lose-sound">
-    <!-- Free error sound -->
-    <source src="https://freesound.org/static/sounds/539131/539131__plasterbrain__error-sound.mp3" type="audio/mpeg">
+    <source src="soft-chill-vibes-323673.mp3" type="audio/mpeg">
   </audio>
   
   <button class="music-toggle" onclick="toggleMusic()">🎵 Music On/Off</button>

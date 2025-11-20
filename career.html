@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
         .nav-bar {
             background-color: var(--deep-green);
             padding: 1rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 10;
         }
@@ -80,8 +81,8 @@
             background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px solid rgba(255,255,255,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             max-width: 900px;
             position: relative;
             z-index: 2;
@@ -91,14 +92,14 @@
             color: var(--mauve);
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .welcome-container h2 {
             color: var(--mauve);
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .welcome-container p {
@@ -113,7 +114,7 @@
             padding: 1.5rem;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .content-section ul {
@@ -152,7 +153,7 @@
             bottom: 0;
             width: 100%;
             height: 60px;
-            background: 
+            background:
                 linear-gradient(45deg, transparent 25%, var(--deep-green) 25%) 0 50px,
                 linear-gradient(-45deg, transparent 25%, var(--deep-green) 25%) 0 50px;
             background-size: 30px 30px;
@@ -172,21 +173,54 @@
             font-size: 24px;
         }
 
-        .flower:nth-child(2) { left: 15%; animation-delay: 0.5s; }
-        .flower:nth-child(3) { left: 25%; animation-delay: 0.8s; }
-        .flower:nth-child(4) { left: 40%; animation-delay: 1.2s; }
-        .flower:nth-child(5) { left: 55%; animation-delay: 0.3s; }
-        .flower:nth-child(6) { left: 70%; animation-delay: 0.9s; }
-        .flower:nth-child(7) { left: 85%; animation-delay: 0.6s; }
+        .flower:nth-child(2) {
+            left: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .flower:nth-child(3) {
+            left: 25%;
+            animation-delay: 0.8s;
+        }
+
+        .flower:nth-child(4) {
+            left: 40%;
+            animation-delay: 1.2s;
+        }
+
+        .flower:nth-child(5) {
+            left: 55%;
+            animation-delay: 0.3s;
+        }
+
+        .flower:nth-child(6) {
+            left: 70%;
+            animation-delay: 0.9s;
+        }
+
+        .flower:nth-child(7) {
+            left: 85%;
+            animation-delay: 0.6s;
+        }
 
         @keyframes grassWave {
-            0% { transform: skewX(-2deg); }
-            100% { transform: skewX(2deg); }
+            0% {
+                transform: skewX(-2deg);
+            }
+
+            100% {
+                transform: skewX(2deg);
+            }
         }
 
         @keyframes flowerSway {
-            0% { transform: translateY(0) rotate(-5deg); }
-            100% { transform: translateY(-10px) rotate(5deg); }
+            0% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            100% {
+                transform: translateY(-10px) rotate(5deg);
+            }
         }
 
         @media (max-width: 768px) {
@@ -195,7 +229,7 @@
                 align-items: center;
                 gap: 1rem;
             }
-            
+
             .nav-bar {
                 padding: 1rem 0;
             }
@@ -211,6 +245,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="nav-bar">
         <ul class="nav-list">
@@ -226,11 +261,15 @@
     <div class="content">
         <div class="welcome-container">
             <h1>Career & Professional Development</h1>
-            <p style="font-size: 1.2rem; color: var(--teal); font-weight: 500;">Building My Future in Marketing & Graphic Design</p>
+            <p style="font-size: 1.2rem; color: var(--teal); font-weight: 500;">Building My Future in Marketing &
+                Graphic Design</p>
 
             <section class="content-section">
                 <h2>Professional Background</h2>
-                <p>As a Marketing and Graphic Design student at the University of Minnesota Duluth, I am building a strong foundation in creative problem-solving, strategic communication, and visual design. My academic focus prepares me for dynamic careers in the marketing and design industries, where innovation and creativity are highly valued.</p>
+                <p>As a Marketing and Graphic Design student at the University of Minnesota Duluth, I am building a
+                    strong foundation in creative problem-solving, strategic communication, and visual design. My
+                    academic focus prepares me for dynamic careers in the marketing and design industries, where
+                    innovation and creativity are highly valued.</p>
             </section>
 
             <section class="content-section">
@@ -247,17 +286,30 @@
 
             <section class="content-section">
                 <h2>Personal Interests</h2>
-                <p>I am passionate about designing meaningful visual experiences, developing effective marketing strategies, and collaborating with others to bring creative ideas to life. My interests span both digital and traditional mediums, and I enjoy exploring how design can communicate powerful messages and connect with audiences.</p>
+                <p>I am passionate about designing meaningful visual experiences, developing effective marketing
+                    strategies, and collaborating with others to bring creative ideas to life. My interests span both
+                    digital and traditional mediums, and I enjoy exploring how design can communicate powerful messages
+                    and connect with audiences.</p>
             </section>
 
             <section class="content-section">
                 <h2>Goals & Aspirations</h2>
-                <p>My goal is to leverage my education and creative skills to build a successful career in marketing or graphic design. I aim to work with innovative teams, contribute to meaningful projects, and continue developing my expertise in visual design and strategic communication throughout my professional journey.</p>
+                <p>My goal is to leverage my education and creative skills to build a successful career in marketing or
+                    graphic design. I aim to work with innovative teams, contribute to meaningful projects, and continue
+                    developing my expertise in visual design and strategic communication throughout my professional
+                    journey.</p>
             </section>
             <section class="content-section">
-                <h2>Career Possibilities</h2>
-                <p>Maurices/Credit Marketing: This would be a great local option for me to explore marketing strategies and become familiar with the job field. Their email is universityrelations@usps.gov. </p>
-                <p>USPS/Graphic Designer: USPS offers the opportunity for me to grow in product designs such as flyers, posters, and other types of media. I love the sound of this job and it would allow me to combine my passion for design with my interest in marketing.</p>
+                <h1>Career Possibilities</h1>
+                <h2>Maurices/Credit Marketing:</h2>
+                <p>This would be a great local option for me to explore marketing strategies and become familiar with the job field.In addition, it would allow me to work with a team and gain experience in retail marketing.
+                    Contact information: 1-866-508-0000 </p>
+                <h2>USPS/Graphic Designer:</h2>
+                <p>USPS offers the opportunity for me to grow in product designs such as flyers,
+                    posters, and other types of media. I love the sound of this job and it would allow me to combine my
+                    passion for design with my interest in marketing.
+                    Contact information: universityrelations@usps.gov. </p>
+                </p>
             </section>
         </div>
     </div>
@@ -273,6 +325,7 @@
         <div class="flower"></div>
     </div>
 </body>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -284,32 +337,42 @@
         }
 
         .career-section {
-            background-color: #FFF8F5; /* Light pinkish background from your image */
+            background-color: #FFF8F5;
+            /* Light pinkish background from your image */
             padding: 50px 20px;
             width: 90%;
             max-width: 1200px;
-            margin: 40px auto; /* Centers the section on the page */
+            margin: 40px auto;
+            /* Centers the section on the page */
             border-radius: 10px;
         }
 
         .career-section h2 {
             text-align: center;
-            color: #6B4F4B; /* Brown color from title */
-            font-family: 'Georgia', 'Times New Roman', serif; /* A font similar to the image */
-            font-size: 2.8em; /* Large title */
+            color: #6B4F4B;
+            /* Brown color from title */
+            font-family: 'Georgia', 'Times New Roman', serif;
+            /* A font similar to the image */
+            font-size: 2.8em;
+            /* Large title */
             margin-bottom: 40px;
         }
 
         .career-container {
             display: flex;
-            justify-content: space-around; /* Spreads the items out */
-            flex-wrap: wrap; /* Allows items to stack on small screens */
-            gap: 30px; /* Space between the items */
+            justify-content: space-around;
+            /* Spreads the items out */
+            flex-wrap: wrap;
+            /* Allows items to stack on small screens */
+            gap: 30px;
+            /* Space between the items */
         }
 
         .career-item {
-            flex-basis: 300px; /* Each item will have a base width */
-            flex-grow: 1; /* Allows items to grow and fill space */
+            flex-basis: 300px;
+            /* Each item will have a base width */
+            flex-grow: 1;
+            /* Allows items to grow and fill space */
             text-align: center;
         }
 
@@ -321,27 +384,35 @@
 
         /* --- Specific Title Styles --- */
         .job-title-ad {
-            color: #00695C; /* Teal color */
-            font-style: italic; /* Italicized like the image */
+            color: #00695C;
+            /* Teal color */
+            font-style: italic;
+            /* Italicized like the image */
         }
 
         .job-title-package {
-            color: #D36E70; /* Salmon pink color */
+            color: #D36E70;
+            /* Salmon pink color */
         }
 
         .job-title-brand {
-            color: #00695C; /* Teal color */
+            color: #00695C;
+            /* Teal color */
         }
+
         /* -------------------------- */
 
 
         .career-item img {
-            width: 100%; /* Makes image fill its container */
+            width: 100%;
+            /* Makes image fill its container */
             height: auto;
-            border-radius: 8px; /* Adds slightly rounded corners */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+            border-radius: 8px;
+            /* Adds slightly rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            /* Adds a subtle shadow */
         }
-
     </style>
-</body>
-<head></head>
+    </body>
+
+    <head></head>
